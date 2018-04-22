@@ -18,24 +18,17 @@ var app = express();
 
 app.get('/query', function(request, response){
 	console.log(request.query.statement);
-
-	con.connect(function(err){
-		if(err) {
+	con.query(request.query.statement, function(err, result) {
+		if(err){
 			console.log(err);
-
 			throw err;
-		} else {
-			con.query(request.query.statement, function(err, result) {
-				if(err){
-					console.log(err);
-					throw err;
-				}
-				else {
-					console.log(result);
-					response.jsonp(result);
-				}
-			});
 		}
+		else {
+			console.log(result);
+			response.jsonp(result);
+		}
+			
+		
 	});
 });
 

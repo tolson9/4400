@@ -1,0 +1,137 @@
+<html>
+
+	<head>
+		<title>Animals and Crop</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</head>
+
+
+	<body>
+		<div class="container-fluid">
+			<br>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="container-fluid">
+						<div class="jumbotron">
+							<br>
+							<div class="row">
+								<h3>View Animals and Crops</h3>
+							</div>
+							<div class="container-fluid">
+								<div class="row">
+									<div class="col-xs-12 col-sm-12" id="table-area">
+										<table class="table table-hover table-striped">
+											<thead>
+											<tr>
+												<th>
+													Name
+												</th>
+												<th>
+													Type
+												</th>
+											</tr>
+											</thead>
+											<tbody id="table-body">
+												<!-- Sample Row
+												<tr class="" id="sample-row">
+													<td>
+														Name
+													</td>
+													<td>
+														Type
+													</td>
+												</tr>
+												-->
+											</tbody>
+										</table>
+									</div>
+									<div class="col-xs-12 col-sm-4 hidden">
+										<div class="row">
+											<table class="table">
+												<thead>
+													<tr><th>Name</th></tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>
+															<a href="#" class="btn btn-primary">Delete Selection</a>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12 col-sm-4">
+									<div class="form-group">
+										<label for="searchDrop">Search By</label>
+										<select class="form-control" id="searchDrop">
+											<option>Type</option>
+											<option>Name</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-4">
+									<div class="form-group">
+										<label for="search">Search Term</label>
+										<input type="email" class="form-control" id="search" aria-describedby="search" placeholder="Search Term">
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-4 form-group">
+									<br>
+									<label></label>
+									<a href="#" class="btn btn-info form-control">Search</a>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="container-fluid">
+								<div class="jumbotron">
+									<div class="row">
+										<div class="col-xs-12 col-sm-4"></div>
+										<div class="col-xs-12 col-sm-4">
+											<div class="row"><h3>Add an Animal or Crop</h3></div>
+											<div class="row">
+												<select class="form-control" id="addDrop">
+													<option>Animal</option>
+													<option>Crop</option>
+												</select>
+											</div>
+											<div class="row">
+												<div class="form-group">
+													<input type="email" class="form-control" id="add" aria-describedby="add" placeholder="Name">
+												</div>
+											</div>
+											<div class="row">
+												<a href="#" class="btn btn-info form-control">Add</a>
+											</div>
+										</div>
+										<div class="col-xs-12 col-sm-4"></div>
+									</div>
+									<div class="row">
+										<div class="col-xs-12 text-center">
+											<br>
+											<br>
+											<a href="#" class="btn btn-info">Back</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>

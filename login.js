@@ -1,6 +1,9 @@
 $(function() {
 	//document has loaded
 
+	//clear cookies
+	document.cookie = "";
+
 	//user tries to log in
 	$('#submit').click(function () {
 		var email = $("#email").val();
@@ -24,17 +27,16 @@ $(function() {
 				 		//incorrect password
 				 		//alert("Incorrect Username or Password");
 				 	} else {
-				 		var cookie = "username=" + result[0].username;
-				 		document.cookie = cookie;
+				 		document.cookie = result[0].USERNAME;
 
 				 		var type = result[0].USERTYPE;
 				 		
 				 		if(type == "ADMIN"){
-				 			document.location = "adminhome.html";
+				 			document.location = "/admin/adminhome.html";
 				 		} else if(type == "VISITOR") {
-				 			document.location = "visitorhome.html";
+				 			document.location = "/visitor/visitorhome.html";
 				 		} else {
-				 			document.location = "ownerhome.html";
+				 			document.location = "/owner/ownerhome.html";
 				 		}
 					}
 			});
