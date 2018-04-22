@@ -1,0 +1,21 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "API",
+  "main": "api.js",
+  "scripts": {
+    "test": "idk"
+  },
+  "repository": {
+    "type": "git",
+    "url": "idk"
+  },
+  "keywords": [
+    "idk"
+  ],
+  "author": "tolson",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
