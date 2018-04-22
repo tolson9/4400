@@ -25,7 +25,7 @@ $(function() {
 				//alert(JSON.stringify(result));
 					if(result.length == 0) {
 				 		//incorrect password
-				 		//alert("Incorrect Username or Password");
+				 		alert("Incorrect Username or Password");
 				 	} else {
 				 		document.cookie = result[0].USERNAME;
 
