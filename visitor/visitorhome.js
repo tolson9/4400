@@ -113,7 +113,7 @@ $(function() {
 					if(result) {
 						$("#detail-area").append("<tr><td>Crops: ");
 						$.each(result, function(index, element){
-							if(element.Itemtype == "CROP") {
+							if(element.Itemtype == "VEGITABLE" || element.Itemtype == "FRUIT" ||element.Itemtype == "NUT" || element.Itemtype == "FLOWER") {
 								$("#detail-area").append(element.ItemName +", ");
 							}
 						});
@@ -127,7 +127,7 @@ $(function() {
 					}
 				});
 
-				sql = "SELECT Rating from VISIT WHERE PROPID='" + propid +"' AND username='" + username;
+				sql = "SELECT Rating from VISIT WHERE PROPID='" + propid +"' AND username='" + username+"'";
 
 				query(sql, function(result) {
 					if(result) {
@@ -151,7 +151,7 @@ $(function() {
 							);
 						} else {
 							$("#detail-area").append(
-								"<tr><td>Your Rating: " + result.RATING + "</td></tr>"
+								"<tr><td>Your Rating: " + result[0].Rating + "</td></tr>"
 							);
 						}
 					}
