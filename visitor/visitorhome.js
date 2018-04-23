@@ -21,62 +21,92 @@ $(function() {
 
 	if(username) {
 		//query database and get all 
-		var sql = "Select *, (Select Count(*) From VISIT AS V Where P.PropID = V.PropID) AS Visits, (Select AVG(VI.Rating) From VISIT AS VI Where P.PropID = VI.PropID) AS AvgRating From PROPERTY AS P Where ApprovedBy != NULL";
+		var sql = "Select *, (Select Count(*) From VISIT AS V Where P.PropID = V.PropID) AS Visits, (Select AVG(VI.Rating) From VISIT AS VI Where P.PropID = VI.PropID) AS AvgRating From PROPERTY AS P Where ApprovedBy IS NOT NULL";
 		
 		query(sql,function(result){
 				//alert(JSON.stringify(result));
 					if(result.length == 0) {
-				 		//incorrect password
-				 		alert("No Properties");
+ 				 		alert("No Properties");
 				 	} else {
-
 				 		$.each(result, function(index, row) {
-				 			$('#table-body').append("<a class='table-result'><tr>");
-				 			$.each(row, function(key, col) {
-				 				if(key = "PROPID") {
-				 					$('#table-body').append("<td class='propid'>"+ col +"</td>");
-				 				}
-				 				$('#table-body').append("<td>"+ col +"</td>");
-				 			});
-				 			$('#table-body').append("</tr></a>");
+				 			$('#table-body').append(
+				 				"<tr class='table-result'>" +
+									"<td>" +
+										row.PROPNAME +
+									"</td>" + 
+									"<td>" +
+										row.STADDRESS +
+									"</td>" +
+									"<td>" +
+										row.CITY +
+									"</td>" +
+									"<td>" +
+										row.ZIP +
+									"</td>" + 
+									"<td>" +
+										row.SIZEACRES + 
+									"</td>" +
+									"<td>" +
+										row.PROPTYPE + 
+									"</td>" +
+									"<td>" +
+										row.ISPUBLIC.data +
+									"</td>" + 
+									"<td>" +
+										row.ISCOMMERCIAL.data +
+									"</td>" +
+									"<td class='propid'>" +
+										row.PROPID +
+									"</td>" +
+									"<td>" + 
+										row.Visits + 
+									"</td>" +
+									"<td>" + 
+										row.AvgRating +
+									"</td>" +
+								"</tr>"
+				 				);
 				 		});
 				 		
 					}
 			});
 	}
 
-	$('.table-result').click(function(){
+	$('body').on('click','.table-result',function(){
 		//show detail view
 		$('#table-area').removeClass('col-sm-12');
 		$('#table-area').addClass('col-sm-8');
 		$('#detail-area').removeClass('hidden');
 
 		//populate detail view
-		var propid = $(this).find('.propid').val();
+		alert(JSON.stringify($(this).find('.propid').html()));
+		var propid = $(this).find('.propid').html();
 		var sql = "Select * From PROPERTY Where PropID = '" + propid +"'";
+
+		alert(sql);
 
 		query(sql, function(result) {
 			if(result.length > 0) {
-				$(this).html = 
-					"<div id='propid-tag' class='hidden'>"+result[0]+"</div>" +
+				$("#detail-area").html(
+					"<div id='propid-tag' class='hidden'>"+result[0].PROPID+"</div>" +
 					"<div class='row'>" +
 						"<table class='table table-striped'>" +
 							"<thead>" +
 								"<tr><th>Detailed View</th></tr>" +
 							"</thead>" +
 							"<tbody>" +
-								"<tr><td>Name:"+ result[0] +"</td></tr>" + 
-								"<tr><td>Owner:"+ result[0] +"</td></tr>" +
-								"<tr><td>Visits:"+ result[0] +"</td></tr>" +
-								"<tr><td>Address:"+ result[0] +"</td></tr>" +
-								"<tr><td>City:"+ result[0] +"</td></tr>" +
-								"<tr><td>Zip:"+ result[0] +"</td></tr>" +
-								"<tr><td>Size:"+ result[0] +"</td></tr>" +
-								"<tr><td>Avg. Rating:"+ result[0] +"</td></tr>" +
-								"<tr><td>Type:"+ result[0] +"</td></tr>" +
-								"<tr><td>Public:"+ result[0] +"</td></tr>" +
-								"<tr><td>Comercial:"+ result[0] +"</td></tr>" +
-								"<tr><td>ID:"+ result[0] +"</td></tr>" +
+								"<tr><td>Name:"+ result[0].PROPNAME +"</td></tr>" + 
+								"<tr><td>Owner:"+ result[0].OWNEDBY +"</td></tr>" +
+								"<tr><td>Visits:"+ result[0].Visits +"</td></tr>" +
+								"<tr><td>Address:"+ result[0].STADDRESS +"</td></tr>" +
+								"<tr><td>City:"+ result[0].CITY +"</td></tr>" +
+								"<tr><td>Zip:"+ result[0].ZIP +"</td></tr>" +
+								"<tr><td>Size:"+ result[0].SIZEACRES +"</td></tr>" +
+								"<tr><td>Avg. Rating:"+ result[0].AvgRating +"</td></tr>" +
+								"<tr><td>Type:"+ result[0].PROPTYPE +"</td></tr>" +
+								"<tr><td>Public:"+ result[0].ISPUBLIC.data +"</td></tr>" +
+								"<tr><td>Comercial:"+ result[0].ISCOMMERCIAL.data +"</td></tr>" +
+								"<tr><td>ID:"+ result[0].PROPID +"</td></tr>" +
 
 								"<tr><td>Crops:</td></tr>" +
 								"<tr><td>Animal:</td></tr>" +
@@ -97,7 +127,8 @@ $(function() {
 								"</tr>" +
 							"</tbody>" +
 						"</table>" +
-					"</div>";
+					"</div>"
+				);
 			}
 		});
 
