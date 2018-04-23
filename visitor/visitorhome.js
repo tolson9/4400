@@ -167,6 +167,76 @@ $(function() {
 
 
 	//
-	$()
+	$("#searchbtn").click(function() {
+		if(username) {
+		//query database and get all 
+
+			var searchterm = $('#search').val();
+
+			if(searchterm) {
+				var searchtype = $("#searchDrop").val();
+
+				if(searchtype == "Name") {
+					sql = "Select *, (Select Count(*) From VISIT AS V Where P.PropID = V.PropID) AS Visits, (Select AVG(VI.Rating) From VISIT AS VI Where P.PropID = VI.PropID) AS AvgRating From PROPERTY AS P Where PropName LIKE '%"+ searchterm +"%' AND ApprovedBy IS NOT NULL";
+				} else if(searchtype == "City") {
+					sql = "Select *, (Select Count(*) From VISIT AS V Where P.PropID = V.PropID) AS Visits, (Select AVG(VI.Rating) From VISIT AS VI Where P.PropID = VI.PropID) AS AvgRating From PROPERTY AS P Where CITY='"+ searchterm +"' AND ApprovedBy IS NOT NULL";
+
+				} else {
+					sql = "Select *, (Select Count(*) From VISIT AS V Where P.PropID = V.PropID) AS Visits, (Select AVG(VI.Rating) From VISIT AS VI Where P.PropID = VI.PropID) AS AvgRating From PROPERTY AS P Where TYPE='"+ searchterm +"' AND ApprovedBy IS NOT NULL";
+
+				}
+
+				query(sql,function(result){
+				//alert(JSON.stringify(result));
+					if(result.length == 0) {
+ 				 		alert("No Properties");
+				 	} else {
+				 		$('#table-body').html("");
+				 		$.each(result, function(index, row) {
+				 			$('#table-body').append(
+				 				"<tr class='table-result'>" +
+									"<td>" +
+										row.PROPNAME +
+									"</td>" + 
+									"<td>" +
+										row.STADDRESS +
+									"</td>" +
+									"<td>" +
+										row.CITY +
+									"</td>" +
+									"<td>" +
+										row.ZIP +
+									"</td>" + 
+									"<td>" +
+										row.SIZEACRES + 
+									"</td>" +
+									"<td>" +
+										row.PROPTYPE + 
+									"</td>" +
+									"<td>" +
+										row.ISPUBLIC.data +
+									"</td>" + 
+									"<td>" +
+										row.ISCOMMERCIAL.data +
+									"</td>" +
+									"<td class='propid'>" +
+										row.PROPID +
+									"</td>" +
+									"<td>" + 
+										row.Visits + 
+									"</td>" +
+									"<td>" + 
+										row.AvgRating +
+									"</td>" +
+								"</tr>"
+				 				);
+				 		});
+				 		
+					}
+			});
+
+			}
+		}
+	});
 
 });
