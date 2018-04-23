@@ -117,21 +117,22 @@ $(function() {
 								$("#detail-area").append(element.ItemName +", ");
 							}
 						});
-						$("#detail-area").append("</tr></td><tr><td>Animals: ");
+						$("#detail-area").append("</td></tr><tr><td>Animals: ");
 						$.each(result, function(index, element){
 							if(element.Itemtype == "ANIMAL") {
 								$("#detail-area").append(element.ItemName +", ");
 							}
 						});
-						$("#detail-area").append("</tr></td>");
+						$("#detail-area").append("</td></tr>");
 					}
 				});
+
+				sql = "SELECT Rating from VISIT WHERE PROPID='" + propid +"' AND username='" + username;
 
 				query(sql, function(result) {
 					if(result) {
-
-					}
-				});
+						if(result.length  == 0) {
+							$("#detail-area").append(
 								"<tr>" +
 									"<td>" + 
 										"<div class='form-group'>" +
@@ -146,11 +147,19 @@ $(function() {
 										"</div>" +
 										"<a href='#' class='btn btn-primary' id='logvisit'>Log Visit</a>" +
 									"</td>" +
-								"</tr>" +
-							"</tbody>" +
+								"</tr>"
+							);
+						} else {
+							$("#detail-area").append(
+								"<tr><td>Your Rating: " + result.RATING + "</td></tr>"
+							);
+						}
+					}
+				});
+
+				$('#detail-area').append("</tbody>" +
 						"</table>" +
-					"</div>"
-				);
+					"</div>");
 			}
 		});
 
