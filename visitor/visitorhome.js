@@ -79,11 +79,8 @@ $(function() {
 		$('#detail-area').removeClass('hidden');
 
 		//populate detail view
-		alert(JSON.stringify($(this).find('.propid').html()));
 		var propid = $(this).find('.propid').html();
-		var sql = "Select * From PROPERTY Where PropID = '" + propid +"'";
-
-		alert(sql);
+		var sql = "Select *,(Select Count(*) From VISIT AS V Where P.PropID = V.PropID) AS Visits, (Select AVG(VI.Rating) From VISIT AS VI Where P.PropID = VI.PropID) AS AvgRating From PROPERTY AS P Where PropID = '" + propid +"'";
 
 		query(sql, function(result) {
 			if(result.length > 0) {
@@ -106,10 +103,35 @@ $(function() {
 								"<tr><td>Type:"+ result[0].PROPTYPE +"</td></tr>" +
 								"<tr><td>Public:"+ result[0].ISPUBLIC.data +"</td></tr>" +
 								"<tr><td>Comercial:"+ result[0].ISCOMMERCIAL.data +"</td></tr>" +
-								"<tr><td>ID:"+ result[0].PROPID +"</td></tr>" +
+								"<tr><td>ID:"+ result[0].PROPID +"</td></tr>"
+				);
+				sql = "Select PC.ItemName, PI.Itemtype " +
+					"From PROPERTYCONTAINS AS PC, PROPERTYITEM AS PI " +
+					"Where PC.PropID = '" + propid + "' AND PC.ItemName = PI.ItemName";
 
-								"<tr><td>Crops:</td></tr>" +
-								"<tr><td>Animal:</td></tr>" +
+				query(sql, function(result) {
+					if(result) {
+						$("#detail-area").append("<tr><td>Crops: ");
+						$.each(result, function(index, element){
+							if(element.Itemtype == "CROP") {
+								$("#detail-area").append(element.ItemName +", ");
+							}
+						});
+						$("#detail-area").append("</tr></td><tr><td>Animals: ");
+						$.each(result, function(index, element){
+							if(element.Itemtype == "ANIMAL") {
+								$("#detail-area").append(element.ItemName +", ");
+							}
+						});
+						$("#detail-area").append("</tr></td>");
+					}
+				});
+
+				query(sql, function(result) {
+					if(result) {
+
+					}
+				});
 								"<tr>" +
 									"<td>" + 
 										"<div class='form-group'>" +
